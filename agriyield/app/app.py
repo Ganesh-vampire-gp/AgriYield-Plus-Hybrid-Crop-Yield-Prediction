@@ -151,8 +151,6 @@ with tab1:
             })
 
             try:
-                
-            
                 X_proc = preprocessor.transform(input_df)
                 
                 
@@ -174,77 +172,69 @@ with tab1:
                 st.subheader("Why this prediction?")
                 
                 
-                if hasattr(X_proc, "toarray"): 
-                    X_proc_shap = X_proc.toarray()
-                else:
-                    X_proc_shap = X_proc
-
-        
-                shap_vals = explainer.shap_values(X_proc_shap)
-            
-            
-                vals = shap_vals[0] 
+                X_proc_user = preprocessor.transform(input_df)
                 
                 
-                cat_encoder = preprocessor.named_transformers_["cat"]
+                if hasattr(X_proc_user, "toarray"): 
+                    X_proc_user = X_proc_user.toarray()
+                
+                
+                shap_vals = explainer.shap_values(X_proc_user)
+                
+                
+                vals = shap_vals[0]
+                
+                
                 try:
                     
-                    ohe_names = list(cat_encoder.get_feature_names_out())
-                    feature_names = ["Year", "Area", "Rainfall", "Temperature", "NDVI"] + ohe_names
-                except:
+                    cat_encoder = preprocessor.named_transformers_["cat"]
+                    ohe_features = list(cat_encoder.get_feature_names_out())
+                    
+                    
+                    num_features = ["Year", "Area", "rainfall", "temperature", "ndvi"] 
+                    
+                    
+                    feature_names = ohe_features + num_features
+                    
+                except Exception as e:
+                    
                     feature_names = [f"Feature {i}" for i in range(len(vals))]
 
                 
+                if len(feature_names) != len(vals):
+                    st.warning(f"Feature name mismatch: Got {len(feature_names)} names for {len(vals)} values. Using generic names.")
+                    feature_names = [f"Feature {i}" for i in range(len(vals))]
+
                 impact_df = pd.DataFrame({
-                    "Feature": feature_names[:len(vals)],
+                    "Feature": feature_names,
                     "Impact": vals
                 })
                 
                 
-                impact_df["Feature"] = impact_df["Feature"].str.replace("cat__", "") \
-                                                        .str.replace("District_", "") \
-                                                        .str.replace("State_", "") \
-                                                        .str.replace("Crop_", "") \
-                                                        .str.replace("Season_", "") \
-                                                        .str.replace("Soil_Type_", "")
-
-                
-                pos_features = impact_df[impact_df["Impact"] > 0].sort_values("Impact", ascending=False).head(2)
-                neg_features = impact_df[impact_df["Impact"] < 0].sort_values("Impact", ascending=True).head(2)
-
-                summary_text = ""
-                
-                
-                if not pos_features.empty:
-                    feats = pos_features["Feature"].tolist()
-                    summary_text += f"The predicted yield is high primarily due to favorable **{', '.join(feats)}**. "
-                
-                
-                if not neg_features.empty:
-                    feats = neg_features["Feature"].tolist()
-                    summary_text += f"However, **{', '.join(feats)}** are limiting factors that slightly reduced the potential yield."
-                else:
-                    summary_text += "Conditions appear excellent with no major negative factors."
-
-                
-                st.markdown("### 📝 Analysis Summary")
-                st.success(summary_text)
-
-                
                 impact_df["Abs_Impact"] = impact_df["Impact"].abs()
                 top_features = impact_df.sort_values("Abs_Impact", ascending=False).head(8)
+                
+                
+                top_features["Feature"] = top_features["Feature"].str.replace("cat__", "") \
+                                                                .str.replace("State_", "") \
+                                                                .str.replace("District_", "") \
+                                                                .str.replace("Season_", "") \
+                                                                .str.replace("Crop_", "") \
+                                                                .str.replace("Soil_Type_", "")
+
+                
                 colors = ["#2ecc71" if x > 0 else "#e74c3c" for x in top_features["Impact"]]
-    
+                
                 fig, ax = plt.subplots(figsize=(10, 4))
                 bars = ax.barh(top_features["Feature"], top_features["Impact"], color=colors)
                 ax.bar_label(bars, fmt="%.1f", padding=3)
                 ax.set_xlabel("Impact on Yield (kg/ha)")
                 ax.axvline(0, color="black", linewidth=0.8, linestyle="--")
-                plt.gca().invert_yaxis()
+                plt.gca().invert_yaxis() 
                 st.pyplot(fig)
-                        
             except Exception as e:
-                st.error(f"Error making prediction: {e}")
+                    st.error(f"Prediction Error: {e}")
+
 
 
 
@@ -284,7 +274,7 @@ with tab2:
             r_dist = st.selectbox("District", r_dists, key="rec_dist")
             
         with rc2:
-            r_season = st.selectbox("Season", ["KHARIF", "RABI", "WHOLE YEAR", "SUMMER"], key="rec_season")
+            r_season = st.selectbox("Season", ["KHARIF", "RABI", "WHOLE YEAR", "SUMMER", "WINTER"], key="rec_season")
             r_soil = st.selectbox("Soil Type", soil_types, key="rec_soil")
 
         with rc3:
