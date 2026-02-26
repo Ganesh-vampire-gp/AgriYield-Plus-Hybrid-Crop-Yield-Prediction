@@ -13,10 +13,6 @@ from gtts import gTTS
 import pyttsx3
 import threading
 
-
-
-
-
 st.set_page_config(page_title="AgriYield+", layout="wide", page_icon="🌱")
 
 st.markdown("""
@@ -633,7 +629,7 @@ elif menu == " 📸 AI Plant Doctor":
         st.markdown("Upload a photo of your crop to identify diseases and get treatment advice.")
 
         
-        GOOGLE_API_KEY = "AIzaSyCvLMThdcDRYm1XppkSh5LB2443RH4NPs4" 
+        GOOGLE_API_KEY = "AIzaSyD9d6pGBqHCKzQcZh9iYXKwBh2XT5roTXo" 
         
         
         uploaded_file = st.file_uploader("Take a photo or upload", type=["jpg", "jpeg", "png"])
