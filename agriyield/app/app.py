@@ -3,11 +3,16 @@ import pandas as pd
 import joblib
 from pathlib import Path
 import numpy as np
+load_model = None
 try:
-    from keras.saving import load_model
+    try:
+        from keras.saving import load_model
+    except ImportError:
+        import tensorflow as tf
+        load_model = tf.keras.models.load_model
 except ImportError:
-    import tensorflow as tf
-    load_model = tf.keras.models.load_model
+    pass
+
 import shap
 import matplotlib.pyplot as plt
 import requests
@@ -130,9 +135,15 @@ def load_resources():
         preprocessor = joblib.load(PREPROC_PATH)
         xgb_model = joblib.load(XGB_PATH)
         cat_model = joblib.load(CAT_PATH)
-        lstm_model = load_model(LSTM_PATH)
+        lstm_model = None
+        if load_model is not None:
+            try:
+                lstm_model = load_model(LSTM_PATH)
+            except Exception as e:
+                st.warning("LSTM model could not be loaded. Predictions will use XGBoost and CatBoost only.")
         explainer = shap.TreeExplainer(xgb_model)
-    except:
+    except Exception as e:
+        st.error(f"Error loading models: {e}")
         preprocessor, xgb_model, cat_model, lstm_model, explainer = None, None, None, None, None
 
 
