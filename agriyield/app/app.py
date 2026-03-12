@@ -3,7 +3,11 @@ import pandas as pd
 import joblib
 from pathlib import Path
 import numpy as np
-import tensorflow as tf
+try:
+    from keras.saving import load_model
+except ImportError:
+    import tensorflow as tf
+    load_model = tf.keras.models.load_model
 import shap
 import matplotlib.pyplot as plt
 import requests
@@ -126,7 +130,7 @@ def load_resources():
         preprocessor = joblib.load(PREPROC_PATH)
         xgb_model = joblib.load(XGB_PATH)
         cat_model = joblib.load(CAT_PATH)
-        lstm_model = tf.keras.models.load_model(LSTM_PATH)
+        lstm_model = load_model(LSTM_PATH)
         explainer = shap.TreeExplainer(xgb_model)
     except:
         preprocessor, xgb_model, cat_model, lstm_model, explainer = None, None, None, None, None
