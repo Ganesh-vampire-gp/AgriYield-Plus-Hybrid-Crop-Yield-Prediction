@@ -1,10 +1,10 @@
-streamlit==1.55.0
+streamlit==1.45.0
 pandas==3.0.1
 numpy==2.4.3
 scikit-learn==1.5.2
 xgboost==3.2.0
 catboost==1.2.10
-protobuf==7.34.0
+protobuf==6.0.0
 joblib==1.4.2
 shap==0.46.0
 matplotlib==3.8.4
