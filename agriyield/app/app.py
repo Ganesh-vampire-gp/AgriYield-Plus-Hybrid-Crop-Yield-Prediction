@@ -634,6 +634,7 @@ elif menu == " 📸 AI Plant Doctor":
         
         uploaded_file = st.file_uploader("Take a photo or upload", type=["jpg", "jpeg", "png"])
         
+    
         if uploaded_file:
             image = Image.open(uploaded_file)
             st.image(image, caption="Uploaded Crop Image", width=300)
