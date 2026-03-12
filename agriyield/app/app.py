@@ -16,7 +16,6 @@ except ImportError:
 import shap
 import matplotlib.pyplot as plt
 import requests
-# Use new google.genai package (google.generativeai is deprecated)
 try:
     import google.genai as genai
 except ImportError:
