@@ -16,7 +16,11 @@ except ImportError:
 import shap
 import matplotlib.pyplot as plt
 import requests
-import google.generativeai as genai
+# Use new google.genai package (google.generativeai is deprecated)
+try:
+    import google.genai as genai
+except ImportError:
+    import google.generativeai as genai
 from PIL import Image
 from gtts import gTTS
 import pyttsx3
@@ -237,8 +241,12 @@ if menu == "🏠 Dashboard":
     col_img, col_txt = st.columns([1, 2])
     with col_img:
         
-        st.image(r"C:\Users\GANESH\OneDrive\Desktop\AgriyieldPlus\agriYield image.jpg", 
-             width=300,)
+        try:
+            img_path = Path(__file__).parent.parent.parent / "agriYield image.jpg"
+            if img_path.exists():
+                st.image(str(img_path), width=300)
+        except:
+            pass
                  
     with col_txt:
         st.info("💡 **Did you know?**\nCrop rotation can improve soil health by returning nutrients to the soil without synthetic fertilizers. Use our Recommendation tool to plan your next season!")
