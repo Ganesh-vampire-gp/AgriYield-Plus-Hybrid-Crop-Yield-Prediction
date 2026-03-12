@@ -629,7 +629,7 @@ elif menu == " 📸 AI Plant Doctor":
         st.markdown("Upload a photo of your crop to identify diseases and get treatment advice.")
 
         
-        GOOGLE_API_KEY = "AIzaSyD9d6pGBqHCKzQcZh9iYXKwBh2XT5roTXo" 
+        GOOGLE_API_KEY = "AIzaSyCVTHyekeI68cbgB0maBeYhb8krmsvP2bk" 
         
         
         uploaded_file = st.file_uploader("Take a photo or upload", type=["jpg", "jpeg", "png"])
