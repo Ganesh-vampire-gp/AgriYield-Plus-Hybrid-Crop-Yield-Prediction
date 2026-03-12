@@ -147,7 +147,12 @@ def load_resources():
                 st.warning("LSTM model could not be loaded. Predictions will use XGBoost and CatBoost only.")
         explainer = shap.TreeExplainer(xgb_model)
     except Exception as e:
-        st.error(f"Error loading models: {e}")
+        error_msg = str(e)
+        if '_RemainderColsList' in error_msg:
+            st.error("⚠️ **Model Version Mismatch**: The pickled preprocessor requires scikit-learn 1.5.x. Please ensure compatible versions are installed.")
+        else:
+            st.error(f"Error loading models: {error_msg}")
+        preprocessor, xgb_model, cat_model, lstm_model, explainer = None, None, None, None, None
         preprocessor, xgb_model, cat_model, lstm_model, explainer = None, None, None, None, None
 
 
