@@ -723,7 +723,7 @@ This project is licensed under the **MIT License** - see the LICENSE file for de
 For issues, questions, or suggestions:
 
 - **GitHub Issues**: [Create an issue](https://github.com/your-repo/issues)
-- **Email**: your.email@example.com
+- **Email**: gugulothu29@gmail.com
 - **Documentation**: Check the [Wiki](https://github.com/your-repo/wiki)
 
 ---
