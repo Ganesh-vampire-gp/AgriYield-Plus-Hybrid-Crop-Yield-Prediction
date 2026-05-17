@@ -35,6 +35,20 @@ def clean_text(df, cols):
 
 df_season = df_season.rename(columns={"State_Name": "State", "District_Name": "District", "Crop_Year": "Year"})
 df_season = clean_text(df_season, ["State", "District", "Season", "Crop"])
+
+# FIX: clean numeric columns (remove brackets like "[1.2618789E1]")
+for col in ["Area", "Production"]:
+    if col in df_season.columns:
+        df_season[col] = (
+            df_season[col]
+            .astype(str)
+            .str.replace(r"[\[\]]", "", regex=True)
+            .str.strip()
+        )
+        df_season[col] = pd.to_numeric(df_season[col], errors="coerce")
+
+df_season = df_season.dropna(subset=["Area", "Production"])
+
 df_season = df_season[df_season["Area"] > 0]
 df_season["Yield"] = df_season["Production"] / df_season["Area"]
 

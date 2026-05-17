@@ -1,3 +1,10 @@
+import os
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
+
+import logging
+logging.getLogger("tensorflow").setLevel(logging.ERROR)
+
 import streamlit as st
 import pandas as pd
 import joblib
@@ -5,13 +12,13 @@ from pathlib import Path
 import numpy as np
 load_model = None
 try:
+    import tensorflow as tf
+    load_model = tf.keras.models.load_model
+except ImportError:
     try:
         from keras.saving import load_model
     except ImportError:
-        import tensorflow as tf
-        load_model = tf.keras.models.load_model
-except ImportError:
-    pass
+        load_model = None
 
 import shap
 import matplotlib.pyplot as plt
@@ -98,14 +105,18 @@ def get_live_weather(city):
     try:
         url = f"http://api.openweathermap.org/data/2.5/weather?q={city},IN&appid={API_KEY}&units=metric"
         response = requests.get(url, timeout=5)
+
         if response.status_code == 200:
             data = response.json()
-            temp = data['main']['temp']
-            rainfall = data.get('rain', {}).get('1h', 0.0)
+
+            temp = data.get("main", {}).get("temp", 25)
+            rainfall = data.get("rain", {}).get("1h", 0.0)
+
             return {"temp": temp, "rainfall": rainfall}
-        else:
-            return None
-    except:
+
+        return None
+
+    except Exception:
         return None
 
 
@@ -125,40 +136,92 @@ def load_resources():
                 df[col] = df[col].astype(str).str.strip().str.upper()
         
     
+        numeric_cols = ["Area", "Production", "Year"]
+        for col in numeric_cols:
+            if col in df.columns:
+                df[col] = (
+                    df[col]
+                    .astype(str)
+                    .str.replace(r"[\[\]]", "", regex=True)
+                    .str.strip()
+                )
+                df[col] = pd.to_numeric(df[col], errors="coerce")
+
         if "target_yield" not in df.columns and "Production" in df.columns:
             df = df[df["Area"] > 0]
             df["target_yield"] = df["Production"] / df["Area"]
+
+        if "target_yield" in df.columns:
+            df["target_yield"] = (
+                df["target_yield"]
+                .astype(str)
+                .str.replace(r"[\[\]]", "", regex=True)
+                .str.strip()
+            )
+            df["target_yield"] = pd.to_numeric(df["target_yield"], errors="coerce")
+
+        df = df.dropna(subset=[c for c in numeric_cols + ["target_yield"] if c in df.columns])
             
     except Exception as e:
         st.error(f"Error loading data: {e}")
         df = pd.DataFrame()
-
     
+    preprocessor = xgb_model = cat_model = lstm_model = explainer = None
+    preprocessor_error = None
+    xgb_error = None
+    cat_error = None
+    lstm_error = None
+    explainer_error = None
+
     try:
         preprocessor = joblib.load(PREPROC_PATH)
-        xgb_model = joblib.load(XGB_PATH)
-        cat_model = joblib.load(CAT_PATH)
-        lstm_model = None
-        if load_model is not None:
-            try:
-                lstm_model = load_model(LSTM_PATH)
-            except Exception as e:
-                st.warning("LSTM model could not be loaded. Predictions will use XGBoost and CatBoost only.")
-        explainer = shap.TreeExplainer(xgb_model)
     except Exception as e:
-        error_msg = str(e)
-        if '_RemainderColsList' in error_msg:
-            st.error("⚠️ **Model Version Mismatch**: The pickled preprocessor requires scikit-learn 1.5.x. Please ensure compatible versions are installed.")
-        else:
-            st.error(f"Error loading models: {error_msg}")
-        preprocessor, xgb_model, cat_model, lstm_model, explainer = None, None, None, None, None
-        preprocessor, xgb_model, cat_model, lstm_model, explainer = None, None, None, None, None
+        preprocessor_error = str(e)
+        st.warning(f"Warning loading preprocessor: {preprocessor_error}")
 
+    try:
+        xgb_model = joblib.load(XGB_PATH)
+    except Exception as e:
+        xgb_error = str(e)
+        st.warning(f"Warning loading XGBoost model: {xgb_error}")
+
+    try:
+        cat_model = joblib.load(CAT_PATH)
+    except Exception as e:
+        cat_error = str(e)
+        st.warning(f"Warning loading CatBoost model: {cat_error}")
+
+    if load_model is not None:
+        try:
+            lstm_model = load_model(LSTM_PATH)
+        except Exception as e:
+            lstm_error = str(e)
+            st.warning("LSTM model could not be loaded. Predictions will use XGBoost and CatBoost only.")
+
+    if xgb_model is not None:
+        try:
+            explainer = shap.TreeExplainer(xgb_model)
+        except Exception as e:
+            explainer_error = str(e)
+            logging.warning(f"SHAP explainer disabled: {explainer_error}")
+            explainer = None
+
+    if preprocessor is None or (xgb_model is None and cat_model is None):
+        msg = "Unable to load the required prediction resources."
+        if preprocessor_error:
+            msg += f" Preprocessor load issue: {preprocessor_error}."
+        if xgb_error:
+            msg += f" XGBoost load issue: {xgb_error}."
+        if cat_error:
+            msg += f" CatBoost load issue: {cat_error}."
+        if lstm_error:
+            msg += f" LSTM load issue: {lstm_error}."
+        st.error(msg)
 
     try:
         recommender = joblib.load(REC_PATH)
         soil_types = joblib.load(SOIL_LIST_PATH)
-    except:
+    except Exception:
         recommender = None
         soil_types = ["CLAYEY", "LOAMY", "SANDY", "BLACK", "RED"]
 
@@ -355,6 +418,13 @@ elif menu == "📊 Crop Yield Prediction":
                     "Soil_Type": [soil_inp]
                 })
 
+                    # Clean numeric columns to ensure float conversion
+                numeric_cols = ["Area", "yield_calculated", "rainfall", "temperature", "ndvi"]
+                for col in numeric_cols:
+                    input_df[col] = input_df[col].astype(str).str.replace(r"[\[\]]", "", regex=True)
+                    input_df[col] = pd.to_numeric(input_df[col], errors="coerce")
+                if input_df[numeric_cols].isnull().any().any():
+                    st.warning("Some numeric values could not be converted. Please check your input.")
                 try:
                     
                     X_proc = preprocessor.transform(input_df)
@@ -367,7 +437,11 @@ elif menu == "📊 Crop Yield Prediction":
                     p_cat = cat_model.predict(X_proc)[0]
 
                     X_lstm = X_proc.reshape((X_proc.shape[0], 1, X_proc.shape[1]))
-                    p_lstm = lstm_model.predict(X_lstm, verbose=0).flatten()[0]
+
+                    if lstm_model is not None:
+                        p_lstm = lstm_model.predict(X_lstm, verbose=0).flatten()[0]
+                    else:
+                        p_lstm = 0
 
                     final_pred = (0.4 * p_xgb) + (0.4 * p_cat) + (0.2 * p_lstm)
                     total_prod = final_pred * area_inp
@@ -380,7 +454,7 @@ elif menu == "📊 Crop Yield Prediction":
 
                     if explainer is not None:
                         shap_vals = explainer.shap_values(X_proc)
-                        vals = shap_vals[0]
+                        vals = shap_vals[0] if isinstance(shap_vals, list) else shap_vals
                     else:
                         vals = np.zeros(X_proc.shape[1])
 
@@ -752,8 +826,9 @@ elif menu == " 📸 AI Plant Doctor":
                                 tts.save("plant_advice.mp3")
                                 
                             
-                                audio_file = open("plant_advice.mp3", "rb")
-                                audio_bytes = audio_file.read()
+                                with open("plant_advice.mp3", "rb") as audio_file:
+                                    audio_bytes = audio_file.read()
+
                                 st.audio(audio_bytes, format="audio/mp3")
                                 
                             except Exception as e:

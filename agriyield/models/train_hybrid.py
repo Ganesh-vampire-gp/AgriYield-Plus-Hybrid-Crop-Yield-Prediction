@@ -1,3 +1,10 @@
+import os
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
+
+import logging
+logging.getLogger("tensorflow").setLevel(logging.ERROR)
+
 import pandas as pd
 import numpy as np
 import joblib
@@ -41,8 +48,22 @@ for df in [df_season, df_soil]:
 print("2. Merging Datasets...")
 merged = df_season.merge(df_soil, on="Crop", how="inner")
 
+# FIX: Clean numeric columns (remove brackets like "[1.2618789E1]")
+for col in ["Area", "Production", "Year"]:
+    if col in merged.columns:
+        merged[col] = (
+            merged[col]
+            .astype(str)
+            .str.replace(r"[\[\]]", "", regex=True)
+            .str.strip()
+        )
+        merged[col] = pd.to_numeric(merged[col], errors="coerce")
+
+# Remove invalid rows
+merged = merged.dropna(subset=["Area", "Production", "Year"])
 
 merged = merged[merged["Area"] > 0]
+
 merged["target_yield"] = merged["Production"] / merged["Area"]
 
 

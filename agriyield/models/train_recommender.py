@@ -68,6 +68,19 @@ def clean(df, cols):
 
 df_season = df_season.rename(columns={"State_Name": "State", "District_Name": "District", "Crop_Year": "Year"})
 df_season = clean(df_season, ["State", "District", "Season", "Crop"])
+
+# FIX: clean numeric columns to remove values like "[1.2618789E1]"
+for col in ["Area", "Production", "Year"]:
+    if col in df_season.columns:
+        df_season[col] = (
+            df_season[col]
+            .astype(str)
+            .str.replace(r"[\[\]]", "", regex=True)
+            .str.strip()
+        )
+        df_season[col] = pd.to_numeric(df_season[col], errors="coerce")
+
+df_season = df_season.dropna(subset=["Area", "Production", "Year"])
 df_soil = clean(df_soil, ["Soil_Type", "Crop"])
 
 
