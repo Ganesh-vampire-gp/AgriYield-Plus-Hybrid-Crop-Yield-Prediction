@@ -24,6 +24,8 @@
 - [Performance Metrics](#performance-metrics)
 - [Advanced Features](#advanced-features)
 - [Troubleshooting](#troubleshooting)
+- [Model Training & Retraining](#model-training--retraining)
+- [Deployment](#deployment)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -32,10 +34,7 @@
 ## 🎯 Overview
 
 AgriyieldPlus leverages multiple machine learning algorithms and deep learning models to:
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 - **Predict crop yields** with high accuracy using ensemble methods
 - **Recommend optimal crops** based on environmental and soil conditions
 - **Provide AI-driven insights** using Google Generative AI
@@ -49,42 +48,29 @@ The system integrates real-world agricultural datasets and provides an intuitive
 ## ✨ Key Features
 
 ### 🤖 Machine Learning
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 - **Ensemble Models**: RandomForest, XGBoost, CatBoost for robust predictions
 - **Deep Learning**: Hybrid LSTM networks for temporal pattern recognition
 - **Hybrid Architecture**: Combines multiple models for improved accuracy
 - **Model Explainability**: SHAP values for feature importance analysis
 
 ### 🌾 Agricultural Intelligence
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 - **Crop Recommendation Engine**: Suggests best crops based on soil type, season, and rainfall
 - **Yield Forecasting**: Predicts production volumes with confidence intervals
 - **Environmental Correlation**: Analyzes impact of weather, soil, and seasonal factors
 - **Historical Analysis**: Learns from 2020-2024 agricultural datasets
 
 ### 🔊 User Experience
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 - **Multilingual Support**: Text-to-speech in multiple languages
 - **AI-Powered Chat**: Google Generative AI integration for instant consultations
 - **Interactive Dashboard**: Real-time visualizations and model insights
 - **Mobile-Friendly**: Responsive design for desktop and mobile access
 
 ### 📊 Data Insights
-<<<<<<< HEAD
 
 - **Comprehensive Datasets**:
-=======
-- **Comprehensive Datasets**: 
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
   - Season-based crop performance
   - Soil nutrition and crop suitability
   - Rainfall patterns and crop viability
@@ -97,7 +83,6 @@ The system integrates real-world agricultural datasets and provides an intuitive
 ## 🛠 Technical Stack
 
 ### Core Framework
-<<<<<<< HEAD
 
 | Component     | Version | Purpose                      |
 | ------------- | ------- | ---------------------------- |
@@ -140,45 +125,6 @@ The system integrates real-world agricultural datasets and provides an intuitive
 | **Joblib**   | 1.4.2   | Model serialization |
 | **Protobuf** | 6.0.0   | Data serialization  |
 | **Pillow**   | 10.1.0  | Image processing    |
-=======
-| Component | Version | Purpose |
-|-----------|---------|---------|
-| **Python** | 3.8+ | Programming language |
-| **Streamlit** | 1.45.0 | Web application framework |
-| **Pandas** | 2.2.1 | Data manipulation & analysis |
-| **NumPy** | 1.26.4 | Numerical computations |
-
-### Machine Learning
-| Component | Version | Purpose |
-|-----------|---------|---------|
-| **Scikit-Learn** | 1.5.2 | Preprocessing & ML algorithms |
-| **XGBoost** | 3.2.0 | Gradient boosting |
-| **CatBoost** | 1.2.10 | Categorical feature handling |
-| **TensorFlow** | 2.x | Deep learning models |
-| **Keras** | Latest | Neural network API |
-
-### Explainability & Visualization
-| Component | Version | Purpose |
-|-----------|---------|---------|
-| **SHAP** | 0.46.0 | Model explanation |
-| **Matplotlib** | 3.8.4 | Data visualization |
-| **Plotly** | Latest | Interactive charts |
-
-### AI & Integration
-| Component | Version | Purpose |
-|-----------|---------|---------|
-| **Google Generative AI** | 0.1.0+ | LLM-powered insights |
-| **gTTS** | 2.4.0 | Text-to-speech synthesis |
-| **pyttsx3** | 2.90 | Offline TTS |
-| **Requests** | 2.32.0 | HTTP communication |
-
-### Data Handling
-| Component | Version | Purpose |
-|-----------|---------|---------|
-| **Joblib** | 1.4.2 | Model serialization |
-| **Protobuf** | 6.0.0 | Data serialization |
-| **Pillow** | 10.1.0 | Image processing |
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 
 ---
 
@@ -216,7 +162,6 @@ AgriyieldPlus/
 ├── runtime.txt                       # Python runtime version
 ├── render.yaml                       # Render deployment config
 └── README.md                         # This file
-
 ```
 
 ---
@@ -224,10 +169,7 @@ AgriyieldPlus/
 ## 💻 Installation
 
 ### Prerequisites
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 - **Python 3.8 or higher**
 - **pip** package manager
 - **Git** (optional, for version control)
@@ -235,31 +177,21 @@ AgriyieldPlus/
 ### Step 1: Clone or Download Repository
 
 ```bash
-# Using Git
 git clone <repository-url>
-cd AgriyieldPlus
-
-# Or extract the ZIP file and navigate to the directory
 cd AgriyieldPlus
 ```
 
 ### Step 2: Create Virtual Environment
 
 **Windows:**
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
 **macOS/Linux:**
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 ```bash
 python3 -m venv venv
 source venv/bin/activate
@@ -287,12 +219,9 @@ python -c "import streamlit; import tensorflow; print('Installation successful!'
 Create a `.env` file in the project root with:
 
 ```bash
-<<<<<<< HEAD
 # Weather API Configuration
 OPENWEATHER_API_KEY=your_openweather_api_key_here
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 # Google Generative AI Configuration
 GOOGLE_API_KEY=your_api_key_here
 
@@ -314,10 +243,7 @@ STREAMLIT_SERVER_ADDRESS=0.0.0.0
 ### Model Configuration
 
 Edit `agriyield/models/train_model.py` to adjust:
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 - Train/test split ratio
 - Model hyperparameters
 - Feature selection
@@ -337,47 +263,32 @@ streamlit run agriyield/app/app.py
 
 ### Features Overview
 
-#### 1. **Crop Recommendation**
-<<<<<<< HEAD
+#### 1. Crop Recommendation
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 - Select soil type, season, and rainfall
 - Get top crop recommendations with suitability scores
 - View historical yield data for recommended crops
 
-#### 2. **Yield Prediction**
-<<<<<<< HEAD
+#### 2. Yield Prediction
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 - Input crop and environmental parameters
 - Get yield predictions from multiple models
 - View model confidence scores and comparison
 
-#### 3. **Model Explainability**
-<<<<<<< HEAD
+#### 3. Model Explainability
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 - Analyze feature importance using SHAP
 - Understand factor contributions to predictions
 - Interactive feature interaction plots
 
-#### 4. **AI Consultation**
-<<<<<<< HEAD
+#### 4. AI Consultation
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 - Ask crop-related questions
 - Get AI-powered recommendations
 - Access expert insights through natural language
 
-#### 5. **Data Analytics**
-<<<<<<< HEAD
+#### 5. Data Analytics
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 - Explore historical trends
 - Regional yield comparisons
 - Seasonal patterns analysis
@@ -395,7 +306,7 @@ Raw Data
 [Data Loading & Validation]
     ├─ AgriYield_ML_Dataset_2020.csv (Core training data)
     ├─ CropYield_Dataset_Region_wise.csv (Regional distribution)
-    ├─ soil_nutrition_based_crop.csv (Soil analysis)
+    ├─ Cropyield_in_India.csv (National yield data)
     ├─ rain_based_crop.csv (Rainfall impact)
     ├─ season_based_crop.csv (Seasonal patterns)
     └─ Weather_TestRegion_2020_SAFE.csv (Weather data)
@@ -419,9 +330,8 @@ Raw Data
 [Model Training & Validation]
 ```
 
-### Key Features
+### Feature Summary
 
-<<<<<<< HEAD
 | Feature     | Type        | Source           | Impact |
 | ----------- | ----------- | ---------------- | ------ |
 | Soil Type   | Categorical | Soil datasets    | HIGH   |
@@ -431,17 +341,6 @@ Raw Data
 | Humidity    | Numerical   | Weather data     | MEDIUM |
 | NDVI        | Numerical   | Satellite data   | LOW    |
 | Region      | Categorical | Regional dataset | MEDIUM |
-=======
-| Feature | Type | Source | Impact |
-|---------|------|--------|--------|
-| Soil Type | Categorical | Soil datasets | HIGH |
-| Season | Categorical | Season dataset | HIGH |
-| Rainfall | Numerical | Rain datasets | HIGH |
-| Temperature | Numerical | Weather data | MEDIUM |
-| Humidity | Numerical | Weather data | MEDIUM |
-| NDVI | Numerical | Satellite data | LOW |
-| Region | Categorical | Regional dataset | MEDIUM |
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 
 ---
 
@@ -477,10 +376,7 @@ Input Data
 ### Deep Learning Component
 
 **Hybrid LSTM Network:**
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 ```
 Input Layer
     ↓
@@ -499,22 +395,13 @@ Output Layer (Linear activation - regression)
 
 ### Model Performance
 
-<<<<<<< HEAD
 | Model        | R² Score  | MAE     | RMSE    |
 | ------------ | --------- | ------- | ------- |
 | RandomForest | ~0.85     | 500     | 680     |
 | XGBoost      | ~0.87     | 480     | 650     |
 | CatBoost     | ~0.88     | 450     | 620     |
 | Hybrid LSTM  | ~0.82     | 550     | 750     |
-=======
-| Model | R² Score | MAE | RMSE |
-|-------|----------|-----|------|
-| RandomForest | ~0.85 | 500 | 680 |
-| XGBoost | ~0.87 | 480 | 650 |
-| CatBoost | ~0.88 | 450 | 620 |
-| Hybrid LSTM | ~0.82 | 550 | 750 |
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
-| **Ensemble** | ~**0.90** | **400** | **570** |
+| **Ensemble** | **~0.90** | **400** | **570** |
 
 ---
 
@@ -523,16 +410,12 @@ Output Layer (Linear activation - regression)
 ### Google Generative AI
 
 The application integrates Google's Generative AI for:
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 - **Question Answering**: Instant responses to agricultural queries
 - **Recommendation Generation**: AI-powered crop suggestions
 - **Report Generation**: Automated analysis summaries
 
 ```python
-# Example Usage (in app.py)
 import google.generativeai as genai
 
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
@@ -543,17 +426,13 @@ response = model.generate_content("agriculture query here")
 ### Text-to-Speech Integration
 
 Supports multiple TTS engines:
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 ```python
-# gTTS (Google Text-to-Speech)
 from gtts import gTTS
+
 tts = gTTS("Your text here", lang='en')
 tts.save("output.mp3")
 
-# pyttsx3 (Offline TTS)
 import pyttsx3
 engine = pyttsx3.init()
 engine.say("Your text here")
@@ -566,21 +445,13 @@ engine.runAndWait()
 
 ### Model Evaluation
 
-**Training Data Metrics:**
-<<<<<<< HEAD
-
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 - Dataset size: 5000+ training samples
 - Feature count: 15-20 engineered features
 - Train/Test split: 80/20
 - Cross-validation: 5-fold
 
-**Performance Indicators:**
-<<<<<<< HEAD
+### Performance Indicators
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 - R² Score: 0.88-0.90
 - Mean Absolute Error: 400-500 tons
 - Root Mean Squared Error: 550-650 tons
@@ -588,7 +459,6 @@ engine.runAndWait()
 
 ### Inference Speed
 
-<<<<<<< HEAD
 | Model        | Prediction Time | Batch Processing |
 | ------------ | --------------- | ---------------- |
 | RandomForest | <50ms           | 100 samples/sec  |
@@ -596,15 +466,6 @@ engine.runAndWait()
 | CatBoost     | <40ms           | 150 samples/sec  |
 | LSTM         | <100ms          | 50 samples/sec   |
 | Ensemble     | ~50ms           | 100 samples/sec  |
-=======
-| Model | Prediction Time | Batch Processing |
-|-------|-----------------|------------------|
-| RandomForest | <50ms | 100 samples/sec |
-| XGBoost | <30ms | 200 samples/sec |
-| CatBoost | <40ms | 150 samples/sec |
-| LSTM | <100ms | 50 samples/sec |
-| Ensemble | ~50ms | 100 samples/sec |
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 
 ---
 
@@ -615,40 +476,28 @@ engine.runAndWait()
 ```python
 import shap
 
-# Create explainer
 explainer = shap.TreeExplainer(model)
 shap_values = explainer.shap_values(X_test)
-
-# Visualizations available:
-# - Feature importance (SHAP values)
-# - Decision plots
-# - Dependence plots
-# - Force plots
-# - Waterfall plots
 ```
 
-**Supported visualizations:**
-<<<<<<< HEAD
+Supported visualizations:
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
-- Global Feature Importance
-- Feature Interaction Analysis
-- Local Prediction Explanations
-- Partial Dependence Plots
+- Global feature importance
+- Decision plots
+- Dependence plots
+- Force plots
+- Waterfall plots
 
 ### Crop Recommendation Logic
 
-```
 1. Load crop-soil compatibility matrix
 2. Load crop-season suitability scores
 3. Load crop-rainfall viability data
 4. Calculate composite score:
-   Score = w1×(soil_match) + w2×(season_match) + w3×(rain_match)
+   Score = w1 × soil_match + w2 × season_match + w3 × rain_match
 5. Rank crops by score
 6. Filter by yield prediction
 7. Return top-N recommendations
-```
 
 ### Recommender System Features
 
@@ -663,25 +512,15 @@ shap_values = explainer.shap_values(X_test)
 ### Common Issues
 
 #### 1. TensorFlow Import Error
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 ```bash
-# Solution: Install/upgrade TensorFlow
 pip install --upgrade tensorflow
-
-# Or use Keras directly
 pip install keras
 ```
 
 #### 2. GPU Out of Memory
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 ```python
-# In app.py, add memory limiting:
 import tensorflow as tf
 gpus = tf.config.list_physical_devices('GPU')
 for gpu in gpus:
@@ -689,39 +528,23 @@ for gpu in gpus:
 ```
 
 #### 3. Google API Key Not Working
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 ```bash
-# Verify in terminal:
 python -c "import os; print(os.getenv('GOOGLE_API_KEY'))"
-
-# Restart Streamlit after setting .env:
 streamlit run agriyield/app/app.py --logger.level=debug
 ```
 
 #### 4. Model File Not Found
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 ```bash
-# Regenerate models:
 python agriyield/models/train_model.py
 python agriyield/models/train_hybrid.py
 python agriyield/models/train_recommender.py
 ```
 
 #### 5. Slow Predictions
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
-```bash
-# Solutions:
-# 1. Reduce model ensemble complexity
-# 2. Implement model caching:
+```python
 import streamlit as st
 @st.cache_resource
 def load_model():
@@ -730,11 +553,6 @@ def load_model():
 
 ### Debug Mode
 
-Enable detailed logging:
-<<<<<<< HEAD
-
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 ```bash
 streamlit run agriyield/app/app.py --logger.level=debug
 ```
@@ -742,15 +560,12 @@ streamlit run agriyield/app/app.py --logger.level=debug
 ### Performance Optimization
 
 ```python
-# 1. Cache expensive operations
 @st.cache_data
 def load_training_data():
     return pd.read_csv('data.csv')
 
-# 2. Use vectorized operations
 data_processed = df.apply(pd.to_numeric, errors='coerce')
 
-# 3. Parallel processing
 from joblib import parallel_backend
 with parallel_backend('threading', n_jobs=-1):
     predictions = model.predict(X)
@@ -763,22 +578,14 @@ with parallel_backend('threading', n_jobs=-1):
 ### Training Individual Models
 
 ```bash
-# Train RandomForest/XGBoost
 python agriyield/models/train_model.py
-
-# Train Hybrid LSTM
 python agriyield/models/train_hybrid.py
-
-# Train Recommender
 python agriyield/models/train_recommender.py
 ```
 
 ### Hyperparameter Tuning
 
-Edit configuration in training scripts:
-
 ```python
-# In train_model.py
 rf_params = {
     'n_estimators': 200,
     'max_depth': 15,
@@ -795,7 +602,7 @@ xgb_params = {
 
 ### Data Update Pipeline
 
-```python
+```bash
 # 1. Place new data in data/raw/
 # 2. Run preprocessing:
 python scripts/preprocess.py
@@ -809,21 +616,15 @@ python agriyield/models/train_model.py
 ## 🌐 Deployment
 
 ### Local Deployment
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 ```bash
 streamlit run agriyield/app/app.py
 ```
 
 ### Cloud Deployment (Render)
 
-Configuration in `render.yaml`:
-<<<<<<< HEAD
+`render.yaml` sample:
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 ```yaml
 services:
   - type: web
@@ -835,10 +636,7 @@ services:
 ```
 
 Deploy command:
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 ```bash
 render deploy
 ```
@@ -856,10 +654,7 @@ CMD ["streamlit", "run", "agriyield/app/app.py"]
 ```
 
 Build and run:
-<<<<<<< HEAD
 
-=======
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 ```bash
 docker build -t agriyieldplus .
 docker run -p 8501:8501 agriyieldplus
@@ -880,24 +675,13 @@ docker run -p 8501:8501 agriyieldplus
 ### Development Setup
 
 ```bash
-# Clone fork
 git clone <your-fork-url>
 cd AgriyieldPlus
-
-# Create feature branch
 git checkout -b feature/your-feature-name
-
-# Install development dependencies
 pip install -r requirements.txt
 pip install pytest black flake8
-
-# Format code
 black agriyield/
-
-# Run linting
 flake8 agriyield/
-
-# Commit and push
 git add .
 git commit -m "Add your feature"
 git push origin feature/your-feature-name
@@ -905,13 +689,13 @@ git push origin feature/your-feature-name
 
 ### Areas for Contribution
 
-- [ ] Improved model architectures
-- [ ] Additional crop datasets
-- [ ] Regional climate integration
-- [ ] Mobile app development
-- [ ] Multi-language support
-- [ ] API/microservices refactoring
-- [ ] Unit tests and CI/CD
+- Improved model architectures
+- Additional crop datasets
+- Regional climate integration
+- Mobile app development
+- Multi-language support
+- API/microservices refactoring
+- Unit tests and CI/CD
 
 ---
 
@@ -926,14 +710,10 @@ This project is licensed under the **MIT License** - see the LICENSE file for de
 For issues, questions, or suggestions:
 
 - **GitHub Issues**: [Create an issue](https://github.com/your-repo/issues)
-<<<<<<< HEAD
 - **Email**: your.email@example.com
-=======
-- **Email**: gugulothu29@gmail.com
->>>>>>> ad04297cf6d9b8d445a48d1afb9e18efd8ff4a8f
 - **Documentation**: Check the [Wiki](https://github.com/your-repo/wiki)
 
-
+---
 
 ## 🙏 Acknowledgments
 
@@ -952,8 +732,6 @@ For issues, questions, or suggestions:
 - **Features Engineered**: 15-20 derived features
 - **Accuracy**: ~90% (Ensemble)
 - **Active Contributors**: Open for contributions
-
----
 
 <div align="center">
 
