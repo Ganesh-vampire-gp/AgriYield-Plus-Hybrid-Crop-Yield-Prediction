@@ -24,9 +24,15 @@ import shap
 import matplotlib.pyplot as plt
 import requests
 try:
-    import google.genai as genai
+    from dotenv import load_dotenv
+    load_dotenv()
 except ImportError:
+    load_dotenv = None
+
+try:
     import google.generativeai as genai
+except ImportError:
+    import google.genai as genai
 from PIL import Image
 from gtts import gTTS
 import pyttsx3
@@ -750,8 +756,8 @@ elif menu == " 📸 AI Plant Doctor":
             }
 
             if st.button("Analyze Plant", type="primary"):
-                if not GOOGLE_API_KEY or "YOUR_GEMINI" in GOOGLE_API_KEY:
-                    st.error("⚠️ API Key missing.")
+                if not GOOGLE_API_KEY or GOOGLE_API_KEY.startswith("YOUR_"):
+                    st.error("⚠️ API Key missing. Please add GOOGLE_API_KEY to your .env or environment.")
                 else:
                     with st.spinner(f"🔬 AI is analyzing in {lang_choice}..."):
                         try:
