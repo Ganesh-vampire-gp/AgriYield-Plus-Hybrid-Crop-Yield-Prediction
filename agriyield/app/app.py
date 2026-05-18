@@ -101,7 +101,7 @@ SOIL_LIST_PATH = MODELS_DIR / "soil_types_list.pkl"
 
 
 def get_live_weather(city):
-    API_KEY = "660d70370f1696132c0e3c5f7c76e6e1"
+    API_KEY = os.getenv("OPENWEATHER_API_KEY", "YOUR_OPENWEATHER_API_KEY")
     try:
         url = f"http://api.openweathermap.org/data/2.5/weather?q={city},IN&appid={API_KEY}&units=metric"
         response = requests.get(url, timeout=5)
@@ -730,7 +730,7 @@ elif menu == " 📸 AI Plant Doctor":
         st.markdown("Upload a photo of your crop to identify diseases and get treatment advice.")
 
         
-        GOOGLE_API_KEY = "AIzaSyCVTHyekeI68cbgB0maBeYhb8krmsvP2bk" 
+        GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "YOUR_GOOGLE_API_KEY")
         
         
         uploaded_file = st.file_uploader("Take a photo or upload", type=["jpg", "jpeg", "png"])
