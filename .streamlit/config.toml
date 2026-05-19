@@ -1,0 +1,6 @@
+[client]
+showErrorDetails = false
+
+[server]
+headless = true
+enableCORS = false
